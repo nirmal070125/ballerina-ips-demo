@@ -1,0 +1,1 @@
+Build a mock hospital registry API using in-memory data that maintains a mapping between hospital IDs and URLs. The API should return the connection URL when queried with a hospital ID, handle errors with appropriate HTTP status codes, and implement concurrent request handling. The service URL should be maintained as a constant in the test cases.

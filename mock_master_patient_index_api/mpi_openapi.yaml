@@ -1,0 +1,77 @@
+openapi: 3.0.1
+info:
+  title: Main Openapi Yaml
+  version: 0.1.0
+servers:
+- url: "{server}:{port}/"
+  variables:
+    server:
+      default: http://localhost
+    port:
+      default: "9090"
+paths:
+  /mpi/{uniquePatientId}/mappings:
+    get:
+      operationId: getMpiUniquepatientidMappings
+      parameters:
+      - name: uniquePatientId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HospitalPatientMapping'
+        "404":
+          description: NotFound
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+components:
+  schemas:
+    ErrorPayload:
+      required:
+      - message
+      - method
+      - path
+      - reason
+      - status
+      - timestamp
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+          format: int64
+        reason:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        method:
+          type: string
+    HospitalPatientMapping:
+      required:
+      - hospitalId
+      - hospitalPatientId
+      type: object
+      properties:
+        hospitalPatientId:
+          type: string
+          description: The hospital specific patient ID
+        hospitalId:
+          type: string
+          description: The hospital ID
+      additionalProperties: false
+      description: Represents a hospital specific patient mapping.

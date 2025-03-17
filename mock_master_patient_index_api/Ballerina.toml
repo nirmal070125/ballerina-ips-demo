@@ -1,0 +1,4 @@
+[package]
+org = "nirmal"
+name = "mock_master_patient_index_api"
+version = "0.1.0"

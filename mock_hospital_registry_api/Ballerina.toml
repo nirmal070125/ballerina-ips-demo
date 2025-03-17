@@ -1,0 +1,4 @@
+[package]
+org = "nirmal"
+name = "mock_hospital_registry_api"
+version = "0.1.0"
