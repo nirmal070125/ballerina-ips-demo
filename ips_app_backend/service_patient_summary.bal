@@ -4,9 +4,6 @@ import ballerinax/health.fhir.r4 as r4;
 import ballerinax/health.fhir.r4.international401 as international401;
 import ballerinax/health.fhir.r4.ips as ips;
 
-final http:Client mpiClient = check new (mpiUrl);
-final http:Client hospitalRegistryClient = check new (registryUrl);
-
 # HTTP service to handle patient summary requests
 service / on new http:Listener(servicePort) {
 
@@ -17,6 +14,16 @@ service / on new http:Listener(servicePort) {
     resource function get [string patientId]/summary() returns json|error {
         // Get patient mappings from MPI
         log:printInfo("Getting patient mappings from MPI for ID: " + patientId);
+        final http:Client|http:ClientError mpiClient = new (mpiUrl);
+        if (mpiClient is http:ClientError) {
+            log:printError("Error creating client for MPI: " + mpiUrl, mpiClient);
+            return error("Error creating client for MPI");
+        }
+        final http:Client|http:ClientError hospitalRegistryClient = new (registryUrl);
+        if (hospitalRegistryClient is http:ClientError) {
+            log:printError("Error creating client for hospital registry: " + registryUrl, hospitalRegistryClient);
+            return error("Error creating client for hospital registry");
+        }
         MpiResponse|http:ClientError mpiResponse = mpiClient->/mpi/[patientId]/mappings;
         PatientMapping[] patientMappings = [];
         if (mpiResponse is http:ClientError) {
