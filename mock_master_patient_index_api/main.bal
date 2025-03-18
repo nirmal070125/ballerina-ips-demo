@@ -15,7 +15,7 @@ final readonly & map<readonly & HospitalPatientMapping[]> patientMappingStore = 
 service / on new http:Listener(9090) {
     isolated resource function get mpi/[string uniquePatientId]/mappings() returns HospitalPatientMapping[]|http:NotFound {
         log:printInfo("Received request for patient ID: " + uniquePatientId);
-        readonly & HospitalPatientMapping[]? mappings = patientMappingStore[uniquePatientId];
+        readonly & HospitalPatientMapping[]? mappings = patientMappingStore.get(uniquePatientId);
         if mappings is () {
             return {
                 body: {
@@ -23,6 +23,7 @@ service / on new http:Listener(9090) {
                 }
             };
         }
+        log:printInfo(string `Returning mappings ${mappings.toBalString()} for patient ID: ${uniquePatientId}`);
         return mappings.clone();
     }
 }
