@@ -7,7 +7,7 @@ final http:Client mpiClient = check new (mpiUrl);
 final http:Client hospitalRegistryClient = check new (registryUrl);
 
 # HTTP service to handle patient summary requests
-service /patient on new http:Listener(servicePort) {
+service / on new http:Listener(servicePort) {
 
     # Resource to get patient summary as FHIR IPS bundle
     #
