@@ -13,7 +13,7 @@ service /patient on new http:Listener(servicePort) {
     #
     # + patientId - ID of the patient
     # + return - FHIR Bundle containing patient summary or error response
-    resource function get [string patientId]/summary() returns r4:Bundle|error {
+    resource function get [string patientId]/summary() returns json|error {
         // Get patient mappings from MPI
         MpiResponse mpiResponse = check mpiClient->/mpi/[patientId]/mappings;
         PatientMapping[] patientMappings = mpiResponse.mappings;
@@ -67,7 +67,7 @@ service /patient on new http:Listener(servicePort) {
             entry: bundleEntries
         };
         summaryBundle = check ips:getIpsBundle(summaryBundle);
-        return summaryBundle;
+        return summaryBundle.toJson();
     }
 
 }
