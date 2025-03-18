@@ -70,7 +70,7 @@ service / on new http:Listener(servicePort) {
             }
 
             // Get conditions
-            r4:Bundle conditionResources = check hospitalClient->/Condition(patient = hospitalPatientId);
+            r4:Bundle conditionResources = check hospitalClient->/MedicationRequest(patient = hospitalPatientId);
 
             r4:BundleEntry[]? conditionEntries = conditionResources.entry;
             if conditionEntries is r4:BundleEntry[] {
