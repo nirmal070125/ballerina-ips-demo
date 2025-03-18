@@ -1,7 +1,6 @@
 import ballerina/http;
 import ballerina/log;
 import ballerinax/health.fhir.r4 as r4;
-import ballerinax/health.fhir.r4.international401 as international401;
 import ballerinax/health.fhir.r4.ips as ips;
 
 # HTTP service to handle patient summary requests
@@ -57,7 +56,7 @@ service / on new http:Listener(servicePort) {
                 continue;
             }
             // Get patient resource
-            international401:Patient patientResource = check hospitalClient->/Patient/[hospitalPatientId];
+            r4:Resource patientResource = check hospitalClient->/Patient/[hospitalPatientId];
             bundleEntries.push({
                 'resource: patientResource
             });
