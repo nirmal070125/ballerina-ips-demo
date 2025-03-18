@@ -3,7 +3,7 @@ import ballerinax/health.fhir.r4 as r4;
 // MPI response types
 type PatientMapping record {
     string hospitalId;
-    string patientId;
+    string hospitalPatientId;
 };
 
 type MpiResponse record {

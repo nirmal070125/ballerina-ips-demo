@@ -39,7 +39,7 @@ service / on new http:Listener(servicePort) {
         // For each mapping, get resources from respective hospitals
         foreach PatientMapping mapping in patientMappings {
             string hospitalId = mapping.hospitalId;
-            string hospitalPatientId = mapping.patientId;
+            string hospitalPatientId = mapping.hospitalPatientId;
 
             Hospital?|http:ClientError hospital = hospitalRegistryClient->/hospitals/[hospitalId]/connection;
             if hospital is http:ClientError {
