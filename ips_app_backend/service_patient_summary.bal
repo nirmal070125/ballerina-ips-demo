@@ -24,13 +24,10 @@ service / on new http:Listener(servicePort) {
             log:printError("Error creating client for hospital registry: " + registryUrl, hospitalRegistryClient);
             return error("Error creating client for hospital registry");
         }
-        MpiResponse|http:ClientError mpiResponse = mpiClient->/mpi/[patientId]/mappings;
-        PatientMapping[] patientMappings = [];
-        if (mpiResponse is http:ClientError) {
-            log:printError("Error getting patient mappings from MPI for ID: " + patientId, mpiResponse);
+        PatientMapping[]|http:ClientError patientMappings = mpiClient->/mpi/[patientId]/mappings;
+        if (patientMappings is http:ClientError) {
+            log:printError("Error getting patient mappings from MPI for ID: " + patientId, patientMappings);
             return error("Error getting patient mappings from MPI");
-        } else {
-            patientMappings = mpiResponse.mappings;
         }
 
         if patientMappings.length() == 0 {
