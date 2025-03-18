@@ -1,4 +1,5 @@
 import ballerina/http;
+import ballerina/log;
 
 // In-memory storage for patient mappings using unique patient ID as the key
 final readonly & map<readonly & HospitalPatientMapping[]> patientMappingStore = {
@@ -13,6 +14,7 @@ final readonly & map<readonly & HospitalPatientMapping[]> patientMappingStore = 
 
 service / on new http:Listener(9090) {
     isolated resource function get mpi/[string uniquePatientId]/mappings() returns HospitalPatientMapping[]|http:NotFound {
+        log:printInfo("Received request for patient ID: " + uniquePatientId);
         readonly & HospitalPatientMapping[]? mappings = patientMappingStore[uniquePatientId];
         if mappings is () {
             return {
