@@ -12,7 +12,7 @@ type MpiResponse record {
 
 // Hospital registry response types
 type Hospital record {
-    string id;
+    string hospitalId;
     string url;
 };
 
