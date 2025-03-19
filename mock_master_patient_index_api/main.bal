@@ -7,8 +7,7 @@ final readonly & map<readonly & HospitalPatientMapping[]> patientMappingStore = 
         {hospitalPatientId: "444222222", hospitalId: "H001"}
     ],
     "UP002": [
-        {hospitalPatientId: "H1P789", hospitalId: "H001"},
-        {hospitalPatientId: "H3P012", hospitalId: "H003"}
+        {hospitalPatientId: "102938475", hospitalId: "H002"}
     ]
 };
 
